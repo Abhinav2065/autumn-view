@@ -268,6 +268,95 @@
     cursor: pointer;
 }
 
+
+.rate {
+    height: 30px;
+    width: 90px;
+    font-size: 10px;
+    border: 1px solid #001219;
+    border-radius: 5px;
+    background-color: #0A9396;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
 .report-info {
     color: #001219;
+}
+
+.rating-info {
+  margin: 0.5rem 0;
+  font-weight: bold;
+  color: #EE9B00;
+}
+
+.rating-stars {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  font-size: 2rem;
+}
+
+.star {
+  cursor: pointer;
+  color: #666;
+  transition: color 0.2s;
+}
+
+.star.active {
+  color: #ffd700;
+}
+
+.star:hover {
+  color: #ffed4a;
+}
+
+.submit-rating-btn {
+  padding: 0.75rem 1.5rem;
+  background: #ffd700;
+  color: black;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.submit-rating-btn:hover {
+  background: #ffed4a;
+}
+
+.popup-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.rate-btn {
+  flex: 1;
+  padding: 0.5rem;
+  background: #ee9b00e3;
+  color: black;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.rate-btn:hover {
+  background: #EE9B00;
+}
+
+.report-fake-btn {
+  flex: 1;
+  padding: 0.5rem;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.report-fake-btn:hover {
+  background: #c82333;
 }

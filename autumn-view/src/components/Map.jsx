@@ -37,6 +37,10 @@ const Map = () => {
     status: 'peak'
   })
   const [fakeReports, setFakeReports] = useState({})
+  const [ratings, setRatings] = useState({})
+  const [isRating, setIsRating] = useState(false)
+  const [currentRatingId, setCurrentRatingId] = useState(null)
+  const [userRating, setUserRating] = useState(0)
 
   const getFoliageLocations = (lat, lng) => {
     const majorCityLocations = [
@@ -112,6 +116,49 @@ const Map = () => {
       }
     ]
     return majorCityLocations
+  }
+
+  const handleRate = (id) => {
+    setCurrentRatingId(id)
+    setIsRating(true)
+    setUserRating(0)
+  }
+
+  const handleRatingSubmit = () => {
+    if (userRating === 0) {
+      alert('Please select a rating!')
+      return
+    }
+
+    const userKey = 'user_' + Math.random().toString(36).substr(2, 9)
+    const currentRatings = JSON.parse(localStorage.getItem('locationRatings') || '{}')
+    
+    if (!currentRatings[currentRatingId]) {
+      currentRatings[currentRatingId] = { total: 0, count: 0, users: {} }
+    }
+    
+    if (currentRatings[currentRatingId].users[userKey]) {
+      alert('You have already rated this location!')
+      return
+    }
+    
+    currentRatings[currentRatingId].total += userRating
+    currentRatings[currentRatingId].count += 1
+    currentRatings[currentRatingId].users[userKey] = userRating
+    
+    localStorage.setItem('locationRatings', JSON.stringify(currentRatings))
+    setRatings(currentRatings)
+    
+    setIsRating(false)
+    setCurrentRatingId(null)
+    setUserRating(0)
+    alert(`Thank you for your ${userRating} star rating!`)
+  }
+
+  const getAverageRating = (id) => {
+    const locationRatings = ratings[id]
+    if (!locationRatings || locationRatings.count === 0) return 0
+    return (locationRatings.total / locationRatings.count).toFixed(1)
   }
 
   const handleFake = (id) => {
@@ -196,7 +243,7 @@ const Map = () => {
     setNewLocation({ name: '', description: '', status: 'peak' })
     setSelectedPosition(null)
     setShowFinalizePopup(false)
-    alert('Location added successfully!')
+    alert('Location added!')
   }
 
   const handleCancel = () => {
@@ -205,12 +252,20 @@ const Map = () => {
     setSelectedPosition(null)
     setShowFinalizePopup(false)
     setNewLocation({ name: '', description: '', status: 'peak' })
+    setIsRating(false)
+    setCurrentRatingId(null)
+    setUserRating(0)
   }
 
   useEffect(() => {
     const savedReports = localStorage.getItem('fakeReports')
     if (savedReports) {
       setFakeReports(JSON.parse(savedReports))
+    }
+
+    const savedRatings = localStorage.getItem('locationRatings')
+    if (savedRatings) {
+      setRatings(JSON.parse(savedRatings))
     }
 
     if (navigator.geolocation) {
@@ -287,15 +342,26 @@ const Map = () => {
                   <div className={`status-badge ${location.status}`}>
                     {location.status.toUpperCase()}
                   </div>
-                  <div className="report-info">
-                    Reports: {fakeReports[location.id]?.count || 0}/5
+                  <div className="rating-info">
+                    ⭐ {getAverageRating(location.id)} ({ratings[location.id]?.count || 0} ratings)
                   </div>
-                  <button 
-                    className='report-fake-btn'
-                    onClick={() => handleFake(location.id)}
-                  >
-                    Report As Fake
-                  </button>
+                  <div className="report-info">
+                    Reports: {fakeReports[location.id]?.count || 0}
+                  </div>
+                  <div className="popup-buttons">
+                    <button 
+                      className='rate-btn'
+                      onClick={() => handleRate(location.id)}
+                    >
+                      Rate
+                    </button>
+                    <button 
+                      className='report-fake-btn'
+                      onClick={() => handleFake(location.id)}
+                    >
+                      Report As Fake
+                    </button>
+                  </div>
                 </div>
               </Popup>
             </Marker>
@@ -316,6 +382,34 @@ const Map = () => {
         <button className="add-location-btn" onClick={handleAddLocation}>
           + Add Location
         </button>
+
+        {isRating && (
+          <div className="form-popup-overlay">
+            <div className="form-popup">
+              <h3>Rate This Location</h3>
+              <div className="rating-stars">
+                {[1, 2, 3, 4, 5].map(star => (
+                  <span
+                    key={star}
+                    className={`star ${star <= userRating ? 'active' : ''}`}
+                    onClick={() => setUserRating(star)}
+                  >
+                    ★
+                  </span>
+                ))}
+              </div>
+              <p>Selected: {userRating} star{userRating !== 1 ? 's' : ''}</p>
+              <div className="form-buttons">
+                <button onClick={handleRatingSubmit} className="submit-rating-btn">
+                  Submit Rating
+                </button>
+                <button onClick={handleCancel} className="cancel-btn">
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {showForm && (
           <div className="form-popup-overlay">
