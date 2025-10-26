@@ -8,6 +8,8 @@ import Footer from './components/Footer'
 import Map from './components/Map'
 import Featured from './components/Featured'
 import Error from './components/Error'
+import About from './components/About'
+
 
 const App = () => {
   const [foliageLocations, setFoliageLocations] = useState([
@@ -69,8 +71,10 @@ const App = () => {
           }
         />
 
-          <Route path='*' element={<Error/>} />
+          <Route path='/about' element={<About/>}/>
 
+          <Route path='*' element={<Error/>} />
+          
       </Routes>
       <Footer />
     </Router>
