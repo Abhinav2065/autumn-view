@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 
 const MapPreview = () => {
@@ -7,7 +8,7 @@ const MapPreview = () => {
         <div className="map-preview">
             <div className="map-header">
                 <h2>Explore Great Places Near You.</h2>
-                <p>View Full Map!</p>
+                <Link to='/map'>View Full Map!</Link>
             </div>
 
             <div className="map-container">

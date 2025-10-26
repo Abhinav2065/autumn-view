@@ -31,3 +31,8 @@
     cursor: pointer;
 }
 
+
+
+.navbar a {
+    text-decoration: none;
+}

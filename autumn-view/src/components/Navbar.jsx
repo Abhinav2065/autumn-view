@@ -1,20 +1,17 @@
 import React from 'react'
-
+import { Link } from 'react-router-dom'
 import '../style/Navbar.css'
 
 const Navbar = () => {
-
-  
-
 
   return (
     <div className='navbar-bg'>
         <div className="navbar">
             <ul>
-                <li>Home</li>
-                <li>Map</li>
-                <li>Forecast</li>
-                <li>Saved</li>
+                <li><Link to='/'>Home</Link></li>
+                <li><Link to='/map'>Map</Link></li>
+                <li><Link to='/forcast'>Forecast</Link></li>
+                <li><Link to='/saved'>Saved</Link></li>
             </ul>
         </div>
     </div>
