@@ -1,0 +1,90 @@
+.featured {
+    background-color: #001219;
+    min-height: 100vh;
+}
+
+
+.featured-hero {
+    text-align: center;
+    padding: 100px;
+}
+
+
+.featured-hero h2 {
+    font-size: 50px;
+}
+
+.featured-hero p {
+    font-size: 25px;
+}
+
+.card {
+    background-color: #0a949665;
+    height: 250px;
+    width: 400px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin: 50px;
+    cursor: pointer;
+}
+
+
+.card:hover {
+    background-color: #0a94969a;
+    transform: scale(1.05);
+}
+
+.card h4 {
+    font-size: 20px;
+}
+
+.card p {
+    margin-bottom: 10px;
+}
+
+.view-on-map-btn {
+    height: 40px;
+    width: 80px;
+    background-color: #9b2226b8;
+    border: none;
+    border-radius: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+
+
+.fake-btn:hover {
+    background-color: #9b2226;
+    transform: scale(1.05);
+}  
+
+.cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+
+.add-places {
+    display: flex;
+    flex-direction: column;
+    padding: 100px;
+    align-items: center;
+}
+.add-btn {
+    height: 100px;
+    width: 200px;
+    font-size: 20px;
+    background-color: rgba(10, 148, 150, 0.838);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}

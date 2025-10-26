@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
-import { Link } from 'react-router-dom'
+import { Link , useLocation} from 'react-router-dom'
 import 'leaflet/dist/leaflet.css'
 import '../style/Map.css'
 import L from 'leaflet'
@@ -23,9 +23,9 @@ function MapClickHandler({ choosingLocation, onMapClick }) {
   return null
 }
 
-const Map = () => {
+const Map = ({foliageLocations, setFoliageLocations}) => {
+  const location = useLocation()
   const [userPosition, setUserPosition] = useState(null) 
-  const [foliageLocations, setFoliageLocations] = useState([]) 
   const [isLoading, setIsLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
   const [choosingLocation, setChoosingLocation] = useState(false)
@@ -78,59 +78,19 @@ const Map = () => {
         position: [27.8021, 85.3678],
         status: "peak",
         description: "National park with rhododendron forests"
-      },
-      {
-        id: 6,
-        name: "Bois de Boulogne, Paris",
-        position: [48.8636, 2.2532],
-        status: "peak",
-        description: "Large Parisian park with autumn colors"
-      },
-      {
-        id: 7,
-        name: "Ueno Park, Tokyo",
-        position: [35.7148, 139.7733],
-        status: "approaching",
-        description: "Famous for cherry blossoms and fall foliage"
-      },
-      {
-        id: 8,
-        name: "Stanley Park, Vancouver",
-        position: [49.3043, -123.1443],
-        status: "peak",
-        description: "Seaside park with dense forest areas"
-      },
-      {
-        id: 9,
-        name: "Lumpini Park, Bangkok",
-        position: [13.7328, 100.5450],
-        status: "approaching",
-        description: "Green oasis in the heart of Bangkok"
-      },
-      {
-        id: 10,
-        name: "Jardim Botânico, Rio de Janeiro",
-        position: [-22.9660, -43.2242],
-        status: "peak",
-        description: "Tropical botanical garden with diverse foliage"
       }
     ]
     return majorCityLocations
   }
 
-
-
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
-    const R_earth = 6371 // radiii of earth
+    const R_earth = 6371 // radius of earth
     const dLat = (lat2 - lat1) * Math.PI / 180
     const dLon = (lon2 - lon1) * Math.PI / 180
     const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2)
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
     return (R_earth * c).toFixed(1) // Distance!
   }
-
-
-
 
   const handleRate = (id) => {
     setCurrentRatingId(id)
@@ -289,25 +249,29 @@ const Map = () => {
           const userLng = position.coords.longitude
           
           setUserPosition([userLat, userLng])
-          
-          const nearbyFoliage = getFoliageLocations(userLat, userLng)
-          setFoliageLocations(nearbyFoliage)
           setIsLoading(false)
         },
         (error) => {
           const fallbackPosition = [27.7172, 85.3240] 
           setUserPosition(fallbackPosition)
-          setFoliageLocations(getFoliageLocations(fallbackPosition[0], fallbackPosition[1]))
           setIsLoading(false)
         }
       )
     } else {
       const fallbackPosition = [27.7172, 85.3240]
       setUserPosition(fallbackPosition)
-      setFoliageLocations(getFoliageLocations(fallbackPosition[0], fallbackPosition[1]))
       setIsLoading(false)
     }
   }, [])
+
+  useEffect(() => {
+    if (location.state?.showAddLocation) {
+      setShowForm(true)
+      // Clear the state so it doesn't trigger again on refresh
+      window.history.replaceState({}, document.title)
+    }
+  }, [location])
+
 
   if (isLoading || !userPosition) {
     return (
