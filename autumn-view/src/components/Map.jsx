@@ -118,6 +118,20 @@ const Map = () => {
     return majorCityLocations
   }
 
+
+
+  const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    const R_earth = 6371 // radiii of earth
+    const dLat = (lat2 - lat1) * Math.PI / 180
+    const dLon = (lon2 - lon1) * Math.PI / 180
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2)
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+    return (R_earth * c).toFixed(1) // Distance!
+  }
+
+
+
+
   const handleRate = (id) => {
     setCurrentRatingId(id)
     setIsRating(true)
@@ -327,7 +341,7 @@ const Map = () => {
           <Marker position={userPosition}>
             <Popup>
               <div className="map-popup">
-                <h3>Your Location</h3>
+                <h3>Me!</h3>
                 <p>You are here! Explore foliage spots around you.</p>
               </div>
             </Popup>
@@ -341,6 +355,18 @@ const Map = () => {
                   <p>{location.description}</p>
                   <div className={`status-badge ${location.status}`}>
                     {location.status.toUpperCase()}
+                  </div>
+                  <div className="distance-info">
+                    {userPosition && (
+                      <p>
+                      📍 {calculateDistance(
+                        userPosition[0], 
+                        userPosition[1], 
+                        location.position[0], 
+                        location.position[1]
+                        )} km away
+                      </p>
+                    )}
                   </div>
                   <div className="rating-info">
                     ⭐ {getAverageRating(location.id)} ({ratings[location.id]?.count || 0} ratings)
