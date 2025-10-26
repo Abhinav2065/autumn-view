@@ -1,0 +1,25 @@
+.error {
+    background-color: #001219;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.error h2 {
+    font-size: 100px;
+    padding: 30px;
+}
+
+.error p {
+    font-size: 60px;
+    padding-left: 100px;
+}
+
+.error .small {
+    font-size: 30px;
+    width: 1000px;
+    padding-top: 60px;
+}

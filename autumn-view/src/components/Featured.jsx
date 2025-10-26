@@ -45,3 +45,4 @@ const Featured = ({ foliageLocations }) => {
 }
 
 export default Featured
+
