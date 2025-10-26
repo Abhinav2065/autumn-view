@@ -3,6 +3,10 @@ import React from 'react'
 import '../style/Navbar.css'
 
 const Navbar = () => {
+
+  
+
+
   return (
     <div className='navbar-bg'>
         <div className="navbar">

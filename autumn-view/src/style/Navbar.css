@@ -1,5 +1,9 @@
 .navbar-bg {
     background-color: #001219;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
 }
 
 .navbar {
@@ -9,6 +13,7 @@
     justify-content: space-between;
     background: #006073ae;
     padding: 15px 7%;
+    margin: 0;
 }
 
 
@@ -25,5 +30,4 @@
     font-size: 21px;
     cursor: pointer;
 }
-
 
