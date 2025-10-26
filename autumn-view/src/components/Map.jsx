@@ -12,7 +12,6 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 })
 
-// Create a separate component to handle map clicks
 function MapClickHandler({ choosingLocation, onMapClick }) {
   useMapEvents({
     click: (e) => {
@@ -37,6 +36,7 @@ const Map = () => {
     description: '',
     status: 'peak'
   })
+  const [fakeReports, setFakeReports] = useState({})
 
   const getFoliageLocations = (lat, lng) => {
     const majorCityLocations = [
@@ -114,9 +114,32 @@ const Map = () => {
     return majorCityLocations
   }
 
-
   const handleFake = (id) => {
+    const userKey = 'user_' + Math.random().toString(36).substr(2, 9)
+    const currentReports = JSON.parse(localStorage.getItem('fakeReports') || '{}')
     
+    if (!currentReports[id]) {
+      currentReports[id] = { count: 0, users: [] }
+    }
+    
+    if (currentReports[id].users.includes(userKey)) {
+      alert('You have already reported this location!')
+      return
+    }
+    
+    currentReports[id].users.push(userKey)
+    currentReports[id].count += 1
+    
+    localStorage.setItem('fakeReports', JSON.stringify(currentReports))
+    setFakeReports(currentReports)
+    
+    if (currentReports[id].count >= 5) {
+      const updatedLocations = foliageLocations.filter(location => location.id !== id)
+      setFoliageLocations(updatedLocations)
+      alert('Location removed due to multiple fake reports.')
+    } else {
+      alert(`Reported! This location has ${currentReports[id].count} report(s).`)
+    }
   }
 
   const handleAddLocation = () => {
@@ -144,7 +167,6 @@ const Map = () => {
   }
 
   const handleMapClick = (e) => {
-    console.log('Map clicked!', e.latlng)
     if (choosingLocation) {
       setSelectedPosition([e.latlng.lat, e.latlng.lng])
     }
@@ -186,6 +208,11 @@ const Map = () => {
   }
 
   useEffect(() => {
+    const savedReports = localStorage.getItem('fakeReports')
+    if (savedReports) {
+      setFakeReports(JSON.parse(savedReports))
+    }
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -199,7 +226,6 @@ const Map = () => {
           setIsLoading(false)
         },
         (error) => {
-          console.log("Error getting location:", error)
           const fallbackPosition = [27.7172, 85.3240] 
           setUserPosition(fallbackPosition)
           setFoliageLocations(getFoliageLocations(fallbackPosition[0], fallbackPosition[1]))
@@ -261,7 +287,13 @@ const Map = () => {
                   <div className={`status-badge ${location.status}`}>
                     {location.status.toUpperCase()}
                   </div>
-                  <button className='report-fake-btn'>
+                  <div className="report-info">
+                    Reports: {fakeReports[location.id]?.count || 0}/5
+                  </div>
+                  <button 
+                    className='report-fake-btn'
+                    onClick={() => handleFake(location.id)}
+                  >
                     Report As Fake
                   </button>
                 </div>
