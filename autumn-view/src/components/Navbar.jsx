@@ -4,7 +4,7 @@ import '../style/Navbar.css'
 
 const Navbar = () => {
   return (
-    <div>
+    <div className='navbar-bg'>
         <div className="navbar">
             <ul>
                 <li>Home</li>

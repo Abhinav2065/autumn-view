@@ -2,3 +2,59 @@
     background-color: #001219;
     height: 100vh;
 }
+
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    height: 60vh;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.hero h1 {  
+    font-size: 60px;
+    color: #CA6702;
+    padding-bottom: 15px;
+}
+
+.hero p {
+    font-size: 30px;
+    color: #94D2BD;
+}
+
+.quickaction {
+    display: flex;
+    justify-content: center;
+}
+
+.action-card {
+    height: 200px;
+    width: 300px;
+    background-color: #0a949665;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 30px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.action-card h3 {
+    font-size: 25px;
+}
+
+.action-card span {
+    font-size: 30px;
+    padding-bottom: 15px;
+}
+
+
+.action-card:hover {
+    background-color: #0a94969a;
+    transform: scale(1.05);
+    cursor: pointer;
+}

@@ -1,9 +1,13 @@
+.navbar-bg {
+    background-color: #001219;
+}
+
 .navbar {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #005F73;
+    background: #006073ae;
     padding: 15px 7%;
 }
 
@@ -17,7 +21,7 @@
 
 .navbar ul li {
     display: inline-block;
-    margin: 10px 10px 20px 20px;
+    margin: 10px 20px;
     font-size: 21px;
     cursor: pointer;
 }
