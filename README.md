@@ -1,7 +1,6 @@
 # Autumn View
 
 **Contributor:** Abhinav Siluwal  
-**Tags:** react website, mapping
 
 ---
 
