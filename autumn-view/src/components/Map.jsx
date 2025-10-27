@@ -42,47 +42,6 @@ const Map = ({foliageLocations, setFoliageLocations}) => {
   const [currentRatingId, setCurrentRatingId] = useState(null)
   const [userRating, setUserRating] = useState(0)
 
-  const getFoliageLocations = (lat, lng) => {
-    const majorCityLocations = [
-      {
-        id: 1,
-        name: "Central Park, New York",
-        position: [40.7829, -73.9654],
-        status: "peak",
-        description: "Iconic urban park with stunning autumn colors"
-      },
-      {
-        id: 2,
-        name: "Shinjuku Gyoen, Tokyo",
-        position: [35.6852, 139.7101],
-        status: "approaching",
-        description: "Beautiful Japanese garden with maple trees"
-      },
-      {
-        id: 3,
-        name: "Hyde Park, London",
-        position: [51.5073, -0.1657],
-        status: "peak",
-        description: "Historic London park with autumn foliage"
-      },
-      {
-        id: 4,
-        name: "Jingshan Park, Beijing",
-        position: [39.9213, 116.3915],
-        status: "approaching",
-        description: "Imperial garden with panoramic city views"
-      },
-      {
-        id: 5,
-        name: "Shivapuri Nagarjun, Kathmandu",
-        position: [27.8021, 85.3678],
-        status: "peak",
-        description: "National park with rhododendron forests"
-      }
-    ]
-    return majorCityLocations
-  }
-
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const R_earth = 6371 // radius of earth
     const dLat = (lat2 - lat1) * Math.PI / 180

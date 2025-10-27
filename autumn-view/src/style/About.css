@@ -18,7 +18,7 @@
 .body {
     text-align: left;
     margin-top: 200px;
-    background-color: #006073e1;
+    background-color: #0060738c;
     height: 200px;
     border-radius: 30px;
     display: flex;
@@ -32,16 +32,18 @@
 .body h3 {
     font-size: 30px;
     padding-bottom: 30px;
+    color: #CA6702;
 }
 
 .body p {
     font-size: 22px;
+    color: #EE9B00;
 }
 
 
 .body:hover {
     transform: scale(1.05);
-    background-color: #006073;
+    background-color: #006073dd;
 }
 
 .list {
@@ -53,3 +55,4 @@
     font-size: 20px;
     padding-top: 40px;
 }
+
